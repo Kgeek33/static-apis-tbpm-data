@@ -66,7 +66,7 @@ const saveStopsToFile = async () => {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(stops, null, 2), "utf-8");
 
-  console.log(`✅ Données TBM stops.json générées : ${stops.length} lignes`);
+  console.log(`✅ Données TBM stops.json générées : ${stops.length} arrêts`);
 };
 
 saveStopsToFile().catch((err) => {

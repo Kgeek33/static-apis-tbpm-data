@@ -48,7 +48,7 @@ const saveStopsBRTToFile = async () => {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(stopsBRT, null, 2), "utf-8");
 
-  console.log(`✅ Données BRT stops.json générées : ${stopsBRT.length} lignes`);
+  console.log(`✅ Données BRT stops.json générées : ${stopsBRT.length} arrêts`);
 };
 
 saveStopsBRTToFile().catch((err) => {
