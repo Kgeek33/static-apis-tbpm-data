@@ -1,0 +1,32 @@
+name: 📁 Generate GTFS JSON
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # tous les jours à 3h UTC
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4.2.2
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 22
+
+      - name: 💾 Install dependencies
+        run: npm ci
+
+      - name: ▶️ Run generator
+        run: npm run generate:*
+
+      - name: 🛫 Commit and push datas if modified
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "🤖 Maj quotidienne GTFS"
+          git push
