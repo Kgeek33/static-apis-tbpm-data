@@ -7,7 +7,9 @@
     "generate:*": "tsx scripts/generateJsonFiles.ts"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.20",
     "@types/node": "^24.3.0",
-    "tsx": "^4.20.4"
+    "tsx": "^4.20.4",
+    "unzipper": "^0.12.3"
   }
 }
