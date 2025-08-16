@@ -32,5 +32,5 @@ jobs:
 
           git add data/
 
-          git diff --cached --quiet || git commit -m "🤖 Maj quotidienne GTFS"
+          git diff --cached --quiet || git commit -m "🤖 Maj quotidienne GTFS + SIRI"
           git push
