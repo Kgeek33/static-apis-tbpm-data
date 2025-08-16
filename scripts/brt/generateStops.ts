@@ -40,7 +40,7 @@ const saveStopsBRTToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const outputPath = path.resolve(
     __dirname,
-    "../../public/data/brt/stops.json",
+    "../../data/brt/stops.json",
   );
 
   const stopsBRT = await fetchStopsBRT();

@@ -58,7 +58,7 @@ const saveStopsToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const outputPath = path.resolve(
     __dirname,
-    "../../public/data/tbm/stops.json",
+    "../../data/tbm/stops.json",
   );
 
   const stops = await fetchStops();

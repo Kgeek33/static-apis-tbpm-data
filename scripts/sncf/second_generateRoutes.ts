@@ -8,7 +8,7 @@ import type { typeRoutesSNCF } from "../../types/Troutes";
 import type { typeStopsSNCF } from "../../types/Tstops";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const basePath = path.resolve(__dirname, "../../public/data/sncf");
+const basePath = path.resolve(__dirname, "../../data/sncf");
 
 const GTFS_URL =
   "https://eu.ftp.opendatasoft.com/sncf/plandata/export-opendata-sncf-gtfs.zip";

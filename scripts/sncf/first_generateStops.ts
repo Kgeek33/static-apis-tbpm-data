@@ -27,7 +27,7 @@ const BBOX_NOUVELLE_AQUITAINE = {
   maxLon: 2.61157,
 };
 
-const basePath = path.resolve(__dirname, "../../public/data/sncf");
+const basePath = path.resolve(__dirname, "../../data/sncf");
 
 const downloadGTFS = (url: string, dest: string): Promise<void> => {
   return new Promise<void>((resolve, reject) => {

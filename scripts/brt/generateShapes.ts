@@ -99,7 +99,7 @@ const saveShapesBRTToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const outputPath = path.resolve(
     __dirname,
-    "../../public/data/brt/shapes.json",
+    "../../data/brt/shapes.json",
   );
 
   const shapesBRT = await fetchshapesBRT();

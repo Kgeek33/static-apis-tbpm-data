@@ -60,7 +60,7 @@ const saveShapesToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const outputPath = path.resolve(
     __dirname,
-    "../../public/data/tbm/shapes.json",
+    "../../data/tbm/shapes.json",
   );
 
   const shapes = await fetchShapes();
