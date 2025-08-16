@@ -1,0 +1,13 @@
+{
+  "name": "gtfs-tbpm-data",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "generate:*": "tsx scripts/generateJsonFiles.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.4"
+  }
+}
