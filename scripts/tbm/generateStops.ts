@@ -1,15 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { typeStopsRequete } from "types/api/Tstops";
-import type { typeStaticAPIs } from "types/T_APIs";
+import type { typeStopsRequete, typeStops } from "../../types/Tstops";
 
-const fetchStops = async (): Promise<typeStaticAPIs["stops"]> => {
+const fetchStops = async (): Promise<typeStops[]> => {
   const res = await fetch(
     "https://bdx.mecatran.com/utw/ws/siri/2.0/bordeaux/stoppoints-discovery.json?AccountKey=opendata-bordeaux-metropole-flux-gtfs-rt",
   );
   const data = (await res.json()) as typeStopsRequete;
-  const stopsList: typeStaticAPIs["stops"] = [];
+  const stopsList: typeStops[] = [];
 
   data.Siri.StopPointsDelivery.AnnotatedStopPointRef.forEach((el) => {
     const stopId = el.StopPointRef.value.split(":")[3];
@@ -22,7 +21,7 @@ const fetchStops = async (): Promise<typeStaticAPIs["stops"]> => {
     });
   });
 
-  const stops: Record<string, typeStaticAPIs["stops"][number]> = {};
+  const stops: Record<string, typeStops[][number]> = {};
 
   stopsList.forEach((el) => {
     const key = el.name;

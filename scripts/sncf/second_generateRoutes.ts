@@ -2,9 +2,10 @@ import fs from "fs";
 import https from "https";
 import path from "path";
 import readline from "readline";
-import type { typeStaticAPIs } from "types/T_APIs";
 import unzipper from "unzipper";
 import { fileURLToPath } from "url";
+import type { typeRoutesSNCF } from "../../types/Troutes";
+import type { typeStopsSNCF } from "../../types/Tstops";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.resolve(__dirname, "../../public/data/sncf");
@@ -72,7 +73,7 @@ const extractFiles = async (
 };
 
 const loadStopNameToIdMap = (
-  rawStops: typeStaticAPIs["sncf_stops"],
+  rawStops: typeStopsSNCF[],
 ): Record<string, string> => {
   const map: Record<string, string> = {};
   rawStops.forEach((s) => {
@@ -95,14 +96,14 @@ const findStopIdByName = (
   return null;
 };
 
-const getRoutesFiltered = async (): Promise<typeStaticAPIs["sncf_routes"]> => {
+const getRoutesFiltered = async (): Promise<typeRoutesSNCF[]> => {
   const inputPathStopTimes = path.join(__dirname, STOP_TIMES_NAME_FILE);
   const inputPathTrip = path.join(__dirname, TRIP_NAME_FILE);
   const inputPathRoutes = path.join(__dirname, ROUTES_NAME_FILE);
 
   const stopsNA = JSON.parse(
     fs.readFileSync(STOPS_JSON, "utf-8"),
-  ) as typeStaticAPIs["sncf_stops"];
+  ) as typeStopsSNCF[];
   const stopsGi = stopsNA.filter((stop) => stop.inGironde);
 
   const girondeStopIds = new Set(stopsGi.map((s) => s.id));
@@ -158,7 +159,7 @@ const getRoutesFiltered = async (): Promise<typeStaticAPIs["sncf_routes"]> => {
   }
 
   // Étape 3 : filtrer routes
-  const routes: typeStaticAPIs["sncf_routes"] = [];
+  const routes: typeRoutesSNCF[] = [];
   const seen = new Set<string>();
   const routesRL = readline.createInterface({
     input: fs.createReadStream(inputPathRoutes),

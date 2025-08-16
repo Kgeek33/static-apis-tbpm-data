@@ -2,9 +2,9 @@ import fs from "fs";
 import https from "https";
 import path from "path";
 import readline from "readline";
-import type { typeStaticAPIs } from "types/T_APIs";
 import unzipper from "unzipper";
 import { fileURLToPath } from "url";
+import type { typeStopsSNCF } from "../../types/Tstops";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -58,8 +58,8 @@ const extractStopsFile = async (
 const parseStops = async (
   bboxNA: typeof BBOX_NOUVELLE_AQUITAINE,
   bboxGi: typeof BBOX_GIRONDE,
-): Promise<typeStaticAPIs["sncf_stops"]> => {
-  const output: typeStaticAPIs["sncf_stops"] = [];
+): Promise<typeStopsSNCF[]> => {
+  const output: typeStopsSNCF[] = [];
   const inputPath = path.join(__dirname, STOP_FILE);
   const rl = readline.createInterface({
     input: fs.createReadStream(inputPath),

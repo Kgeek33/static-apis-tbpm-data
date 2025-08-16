@@ -1,13 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { typeShapesRequete } from "types/api/Tshapes";
-import type { typeStaticAPIs } from "types/T_APIs";
+import type { typeShapesRequete, typeShapes } from "../../types/Tshapes";
 
-const fetchshapesBRT = async (): Promise<typeStaticAPIs["brt_shapes"]> => {
+const fetchshapesBRT = async (): Promise<typeShapes[]> => {
   const coorPerRoute: Record<number, GeoJSON.Position[][]> = {};
   const geoIdsPerRoute: Record<number, number[]> = {};
-  const shapes: typeStaticAPIs["brt_shapes"] = [];
+  const shapes: typeShapes[] = [];
 
   const ids: number[] = [];
   for (let id = 123; id <= 198; id++) {

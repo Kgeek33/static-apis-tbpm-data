@@ -1,17 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { typeShapesRequete } from "types/api/Tshapes";
-import type { typeStaticAPIs } from "types/T_APIs";
+import type { typeShapesRequete, typeShapes } from "../../types/Tshapes";
 
-const fetchShapes = async (): Promise<typeStaticAPIs["shapes"]> => {
+const fetchShapes = async (): Promise<typeShapes[]> => {
   const res = await fetch(
     "https://transport.data.gouv.fr/resources/conversions/83024/GeoJSON",
   );
 
   const data = (await res.json()) as typeShapesRequete;
   const coorPerRoute: Record<string, GeoJSON.Position[][]> = {};
-  const shapes: typeStaticAPIs["shapes"] = [];
+  const shapes: typeShapes[] = [];
 
   data.features
     .filter((f) => f.geometry.type === "LineString")

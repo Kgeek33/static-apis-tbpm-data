@@ -1,8 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { typeRoutesRequete } from "types/api/Troutes";
-import type { typeStaticAPIs } from "types/T_APIs";
+import type { typeRoutesRequete, typeRoutes } from "../../types/Troutes";
 
 // Utilitaire pour le nettoyage du nom de terminus
 const cleanPlaceName = (raw: string): string => {
@@ -33,17 +32,17 @@ const checkLigne = (ligne: string, terminus: string): string => {
   return lignesIgnore.includes(ligne) ? terminus : cleanPlaceName(terminus);
 };
 
-const fetchRoutes = async (): Promise<typeStaticAPIs["routes"]> => {
+const fetchRoutes = async (): Promise<typeRoutes[]> => {
   const res = await fetch(
     "https://bdx.mecatran.com/utw/ws/siri/2.0/bordeaux/lines-discovery.json?AccountKey=opendata-bordeaux-metropole-flux-gtfs-rt",
   );
 
   const data = (await res.json()) as typeRoutesRequete;
-  const routes: typeStaticAPIs["routes"] = [];
+  const routes: typeRoutes[] = [];
 
   data.Siri.LinesDelivery.AnnotatedLineRef.forEach((element) => {
     const ligneId = element.LineRef.value.split(":")[2];
-    const destinations: typeStaticAPIs["routes"][number]["terminus"] = [];
+    const destinations: typeRoutes[][number]["terminus"] = [];
 
     element.Destinations.forEach((directionElement) => {
       const raw = directionElement.PlaceName[0].value;
