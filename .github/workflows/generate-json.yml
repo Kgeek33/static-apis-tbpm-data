@@ -2,7 +2,7 @@ name: 📁 Generate GTFS JSON
 
 on:
   schedule:
-    - cron: "0 0 * * *" # tous les jours à 0h UTC
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: 💾 Install dependencies
-        run: npm ci
+        run: npm i
 
       - name: ▶️ Run generator
         run: npm run generate:*
