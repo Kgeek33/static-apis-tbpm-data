@@ -2,7 +2,7 @@ name: 📁 Generate GTFS JSON
 
 on:
   schedule:
-    - cron: "0 3 * * *" # tous les jours à 3h UTC
+    - cron: "0 0 * * *" # tous les jours à 0h UTC
   workflow_dispatch:
 
 jobs:
