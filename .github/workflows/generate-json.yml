@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout repo
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
       - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v5.0.0
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
 
       - name: 💾 Install dependencies
-        run: npm i
+        run: npm ci
 
       - name: ▶️ Run generator
         run: npm run generate:*
