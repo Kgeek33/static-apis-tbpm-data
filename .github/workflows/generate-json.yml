@@ -1,4 +1,4 @@
-name: 📁 Generate GTFS JSON
+name: 📁 Generate Static APIs JSON
 
 on:
   schedule:
