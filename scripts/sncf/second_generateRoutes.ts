@@ -5,7 +5,7 @@ import readline from "readline";
 import unzipper from "unzipper";
 import { fileURLToPath } from "url";
 import type { typeRoutesSNCF } from "../../types/Troutes";
-import type { typeStopsSNCF } from "../../types/Tstops";
+import type { typeStopsListRequete, typeStopsSNCF } from "../../types/Tstops";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.resolve(__dirname, "../../data/sncf");
@@ -36,7 +36,7 @@ const downloadGTFS = (url: string, dest: string): Promise<void> => {
 
 const extractFiles = async (
   zipPath: string,
-  outputDir: string = __dirname,
+  outputDir: string = __dirname
 ): Promise<void> => {
   return new Promise<void>((resolve, reject) => {
     const expectedFiles = new Set([
@@ -63,8 +63,8 @@ const extractFiles = async (
         } else {
           reject(
             `Fichiers manquants dans le ZIP (trouvés: ${Array.from(
-              extracted,
-            ).join(", ")})`,
+              extracted
+            ).join(", ")})`
           );
         }
       })
@@ -73,7 +73,7 @@ const extractFiles = async (
 };
 
 const loadStopNameToIdMap = (
-  rawStops: typeStopsSNCF[],
+  rawStops: typeStopsSNCF[]
 ): Record<string, string> => {
   const map: Record<string, string> = {};
   rawStops.forEach((s) => {
@@ -85,7 +85,7 @@ const loadStopNameToIdMap = (
 
 const findStopIdByName = (
   name: string,
-  stopNameToId: Record<string, string>,
+  stopNameToId: Record<string, string>
 ): string | null => {
   const target = name.trim().toLowerCase();
   for (const [nom, id] of Object.entries(stopNameToId)) {
@@ -102,7 +102,7 @@ const getRoutesFiltered = async (): Promise<typeRoutesSNCF[]> => {
   const inputPathRoutes = path.join(__dirname, ROUTES_NAME_FILE);
 
   const stopsNA = JSON.parse(
-    fs.readFileSync(STOPS_JSON, "utf-8"),
+    fs.readFileSync(STOPS_JSON, "utf-8")
   ) as typeStopsSNCF[];
   const stopsGi = stopsNA.filter((stop) => stop.inGironde);
 
@@ -192,14 +192,27 @@ const getRoutesFiltered = async (): Promise<typeRoutesSNCF[]> => {
     const idA = findStopIdByName(firstStop, stopNameToId);
     const idB = findStopIdByName(lastStop, stopNameToId);
 
+    const terminus: typeRoutesSNCF["terminus"] = [];
+    const res = await fetch(
+      `https://gateway-apim.infotbm.com/maas-web/web/v1/timetables/lines/line:SNC:${record.route_id}`
+    );
+    const data = await res.json() as typeStopsListRequete;
+    const firstDirection = data.routes[0];
+    const firstStopId = firstDirection.stopPoints[0].id;
+    const stopId = `StopArea:OCE${firstStopId.split("-")[1]}`;
+    if (stopId === idB) {
+      terminus.push({ direction: firstStop, id: idA ?? "0" });
+      terminus.push({ direction: lastStop, id: idB ?? "1" },)
+    } else {
+      terminus.push({ direction: lastStop, id: idB ?? "0" });
+      terminus.push({ direction: firstStop, id: idA ?? "1" },)
+    }
+
     routes.push({
       id: record.route_id,
       name: longName || shortName,
       nameShort: shortName,
-      terminus: [
-        { direction: lastStop, id: idB ?? "0" },
-        { direction: firstStop, id: idA ?? "1" },
-      ],
+      terminus,
       tripIds: routeIdToTripIds[record.route_id] || [],
     });
     seen.add(record.route_id);

@@ -22,6 +22,48 @@ export type typeStopsBRTRequete = GeoJSON.FeatureCollection<
   typeStopsBRTProperties
 >;
 
+export interface typeStopsListRequete {
+  code: string;
+  documents: [
+    {
+      endDate: string;
+      startDate: string;
+      title: string;
+      type: string;
+      url: string;
+    }
+  ];
+  iconUrl: string;
+  id: string;
+  isOperating: boolean;
+  isSpecial: boolean;
+  mapUrl: string;
+  mode: string;
+  name: string;
+  routes: {
+    id: string;
+    name: string;
+    stopPoints: [
+      {
+        coordinates: {
+          latitude: number;
+          longitude: number;
+        };
+        hasWheelchairBoarding: boolean;
+        id: string;
+        isPartialTerminus: boolean;
+        name: string;
+        stopAreaId: string;
+      }
+    ];
+  }[];
+  style: {
+    color: string;
+    textColor: string;
+  };
+  timetableUrl: string;
+}
+
 export interface typeStops {
   id: string[];
   lignes: Record<string, string[]>;
