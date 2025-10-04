@@ -38,7 +38,9 @@ const fetchShapes = async (): Promise<typeShapes[]> => {
 
         shapes.push({
           geometry: {
-            coordinates: coorPerRoute[routeId],
+            coordinates: coorPerRoute[routeId].map((coorLine) =>
+              coorLine.sort((a, b) => a[0] - b[0])
+            ),
             type: "MultiLineString",
           },
           properties: {

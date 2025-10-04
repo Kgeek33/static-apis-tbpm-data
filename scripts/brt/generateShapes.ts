@@ -79,7 +79,12 @@ const fetchshapesBRT = async (): Promise<typeShapes[]> => {
       const color = getColor(id);
 
       shapes.push({
-        geometry: { coordinates: coorPerRoute[id], type: "MultiLineString" },
+        geometry: {
+          coordinates: coorPerRoute[id].map((coorLine) =>
+            coorLine.sort((a, b) => a[0] - b[0])
+          ),
+          type: "MultiLineString"
+        },
         properties: {
           routeColor: color,
           routeId: id.toString(),
