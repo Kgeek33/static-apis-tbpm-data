@@ -93,9 +93,8 @@ const parseStops = async (
         lon >= bboxGi.minLon &&
         lon <= bboxGi.maxLon;
       output.push({
-        id: obj.stop_id,
+        id: [obj.stop_id],
         name: obj.stop_name,
-        position: [lat, lon],
         inGironde,
       });
     }

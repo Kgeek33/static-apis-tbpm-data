@@ -66,19 +66,9 @@ export interface typeStopsListRequete {
 
 export interface typeStops {
   id: string[];
-  lignes: Record<string, string[]>;
-  name: string;
-  position: Record<string, number[]>;
-}
-
-export interface typeStopsBRT {
-  id: string[];
   name: string;
 }
 
-export interface typeStopsSNCF {
-  id: string;
-  name: string;
-  position: number[];
+export interface typeStopsSNCF extends typeStops {
   inGironde: boolean;
 }

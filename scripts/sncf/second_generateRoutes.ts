@@ -78,7 +78,7 @@ const loadStopNameToIdMap = (
   const map: Record<string, string> = {};
   rawStops.forEach((s) => {
     const name = s.name.toLowerCase();
-    map[name] = s.id;
+    map[name] = s.id[0] ?? "";
   });
   return map;
 };
@@ -106,7 +106,7 @@ const getRoutesFiltered = async (): Promise<typeRoutesSNCF[]> => {
   ) as typeStopsSNCF[];
   const stopsGi = stopsNA.filter((stop) => stop.inGironde);
 
-  const girondeStopIds = new Set(stopsGi.map((s) => s.id));
+  const girondeStopIds = new Set(stopsGi.map((s) => s.id[0]));
 
   const stopNameToId = loadStopNameToIdMap(stopsNA);
 

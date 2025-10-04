@@ -12,12 +12,9 @@ const fetchStops = async (): Promise<typeStops[]> => {
 
   data.Siri.StopPointsDelivery.AnnotatedStopPointRef.forEach((el) => {
     const stopId = el.StopPointRef.value.split(":")[3];
-    const lignes = el.Lines.map((l) => l.value.split(":")[2]);
     stopsList.push({
       id: [stopId],
-      lignes: { [stopId]: lignes },
       name: el.StopName.value,
-      position: { [stopId]: [el.Location.longitude, el.Location.latitude] },
     });
   });
 
@@ -29,23 +26,11 @@ const fetchStops = async (): Promise<typeStops[]> => {
     if (!(key in stops)) {
       stops[key] = {
         id: el.id,
-        lignes: { ...el.lignes },
         name: key,
-        position: { ...el.position },
       };
     } else {
-      if (!stops[key].id.includes(currentId)) stops[key].id.push(currentId);
-      if (!stops[key].lignes[currentId]) {
-        stops[key].lignes[currentId] = [...el.lignes[currentId]];
-      } else {
-        el.lignes[currentId].forEach((ligne) => {
-          if (!stops[key].lignes[currentId].includes(ligne)) {
-            stops[key].lignes[currentId].push(ligne);
-          }
-        });
-      }
-      if (!stops[key].position[currentId]) {
-        stops[key].position[currentId] = el.position[currentId];
+      if (!stops[key].id.includes(currentId)) {
+        stops[key].id.push(currentId);
       }
     }
     stops[key].id.sort((a, b) => parseInt(a) - parseInt(b));

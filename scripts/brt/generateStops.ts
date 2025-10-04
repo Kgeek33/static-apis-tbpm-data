@@ -1,14 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { typeStopsBRTRequete, typeStopsBRT } from "../../types/Tstops";
+import type { typeStopsBRTRequete, typeStops } from "../../types/Tstops";
 
-const fetchStopsBRT = async (): Promise<typeStopsBRT[]> => {
+const fetchStopsBRT = async (): Promise<typeStops[]> => {
   const res = await fetch(
     `https://data.bordeaux-metropole.fr/geojson?key=258BILMNYZ&typename=sv_arret_p&attributes=["gid","libelle","source"]`
   );
   const data = (await res.json()) as typeStopsBRTRequete;
-  const stopsList: typeStopsBRT[] = [];
+  const stopsList: typeStops[] = [];
 
   data.features
     .filter((el) => el.properties.source !== "SIG_KEOLIS")
@@ -19,7 +19,7 @@ const fetchStopsBRT = async (): Promise<typeStopsBRT[]> => {
       });
     });
 
-  const stops: Record<string, typeStopsBRT[][number]> = {};
+  const stops: Record<string, typeStops[][number]> = {};
   stopsList.forEach((el) => {
     const key = el.name;
     const currentId = el.id[0];
