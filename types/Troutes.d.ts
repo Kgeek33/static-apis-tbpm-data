@@ -6,7 +6,7 @@ export interface typeRoutesRequete {
           {
             DirectionRef: { value: string };
             PlaceName: [{ value: string }];
-          },
+          }
         ];
         LineCode: { value: string };
         LineName: [{ value: string } | null];

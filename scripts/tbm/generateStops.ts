@@ -5,7 +5,7 @@ import type { typeStopsRequete, typeStops } from "../../types/Tstops";
 
 const fetchStops = async (): Promise<typeStops[]> => {
   const res = await fetch(
-    "https://bdx.mecatran.com/utw/ws/siri/2.0/bordeaux/stoppoints-discovery.json?AccountKey=opendata-bordeaux-metropole-flux-gtfs-rt",
+    "https://bdx.mecatran.com/utw/ws/siri/2.0/bordeaux/stoppoints-discovery.json?AccountKey=opendata-bordeaux-metropole-flux-gtfs-rt"
   );
   const data = (await res.json()) as typeStopsRequete;
   const stopsList: typeStops[] = [];
@@ -56,10 +56,7 @@ const fetchStops = async (): Promise<typeStops[]> => {
 
 const saveStopsToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const outputPath = path.resolve(
-    __dirname,
-    "../../data/tbm/stops.json",
-  );
+  const outputPath = path.resolve(__dirname, "../../data/tbm/stops.json");
 
   const stops = await fetchStops();
 

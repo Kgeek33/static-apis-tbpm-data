@@ -5,7 +5,7 @@ import type { typeStopsBRTRequete, typeStopsBRT } from "../../types/Tstops";
 
 const fetchStopsBRT = async (): Promise<typeStopsBRT[]> => {
   const res = await fetch(
-    `https://data.bordeaux-metropole.fr/geojson?key=258BILMNYZ&typename=sv_arret_p&attributes=["gid","libelle","source"]`,
+    `https://data.bordeaux-metropole.fr/geojson?key=258BILMNYZ&typename=sv_arret_p&attributes=["gid","libelle","source"]`
   );
   const data = (await res.json()) as typeStopsBRTRequete;
   const stopsList: typeStopsBRT[] = [];
@@ -38,10 +38,7 @@ const fetchStopsBRT = async (): Promise<typeStopsBRT[]> => {
 
 const saveStopsBRTToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const outputPath = path.resolve(
-    __dirname,
-    "../../data/brt/stops.json",
-  );
+  const outputPath = path.resolve(__dirname, "../../data/brt/stops.json");
 
   const stopsBRT = await fetchStopsBRT();
 

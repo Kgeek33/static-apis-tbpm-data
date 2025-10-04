@@ -196,16 +196,16 @@ const getRoutesFiltered = async (): Promise<typeRoutesSNCF[]> => {
     const res = await fetch(
       `https://gateway-apim.infotbm.com/maas-web/web/v1/timetables/lines/line:SNC:${record.route_id}`
     );
-    const data = await res.json() as typeStopsListRequete;
+    const data = (await res.json()) as typeStopsListRequete;
     const firstDirection = data.routes[0];
     const firstStopId = firstDirection.stopPoints[0].id;
     const stopId = `StopArea:OCE${firstStopId.split("-")[1]}`;
     if (stopId === idB) {
       terminus.push({ direction: firstStop, id: idA ?? "0" });
-      terminus.push({ direction: lastStop, id: idB ?? "1" },)
+      terminus.push({ direction: lastStop, id: idB ?? "1" });
     } else {
       terminus.push({ direction: lastStop, id: idB ?? "0" });
-      terminus.push({ direction: firstStop, id: idA ?? "1" },)
+      terminus.push({ direction: firstStop, id: idA ?? "1" });
     }
 
     routes.push({

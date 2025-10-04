@@ -44,7 +44,7 @@ const downloadGTFS = (url: string, dest: string): Promise<void> => {
 
 const extractStopsFile = async (
   zipPath: string,
-  outputDir: string = __dirname,
+  outputDir: string = __dirname
 ): Promise<void> => {
   return new Promise<void>((resolve, reject) => {
     fs.createReadStream(zipPath)
@@ -57,7 +57,7 @@ const extractStopsFile = async (
 
 const parseStops = async (
   bboxNA: typeof BBOX_NOUVELLE_AQUITAINE,
-  bboxGi: typeof BBOX_GIRONDE,
+  bboxGi: typeof BBOX_GIRONDE
 ): Promise<typeStopsSNCF[]> => {
   const output: typeStopsSNCF[] = [];
   const inputPath = path.join(__dirname, STOP_FILE);
@@ -74,7 +74,7 @@ const parseStops = async (
       continue;
     }
     const obj: Record<string, string> = Object.fromEntries(
-      headers.map((h, i) => [h, cols[i]]),
+      headers.map((h, i) => [h, cols[i]])
     );
     const lat = parseFloat(obj.stop_lat);
     const lon = parseFloat(obj.stop_lon);
@@ -115,10 +115,12 @@ const saveStops = async () => {
   fs.writeFileSync(
     path.join(basePath, "stops.json"),
     JSON.stringify(stopsNA, null, 2),
-    "utf-8",
+    "utf-8"
   );
   console.log(
-    `✅ ${stopsNA.length} arrêts en Nouvelle-Aquitaine, dont ${stopsNA.filter((stop) => stop.inGironde).length} en Gironde`,
+    `✅ ${stopsNA.length} arrêts en Nouvelle-Aquitaine, dont ${
+      stopsNA.filter((stop) => stop.inGironde).length
+    } en Gironde`
   );
 };
 

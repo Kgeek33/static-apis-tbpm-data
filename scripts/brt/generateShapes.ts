@@ -27,7 +27,7 @@ const fetchshapesBRT = async (): Promise<typeShapes[]> => {
   });
 
   const res = await fetch(
-    `https://data.bordeaux-metropole.fr/geojson?key=258BILMNYZ&typename=SV_CHEM_L&attributes=["geom","gid","rs_sv_ligne_a"]&filter=${filter}`,
+    `https://data.bordeaux-metropole.fr/geojson?key=258BILMNYZ&typename=SV_CHEM_L&attributes=["geom","gid","rs_sv_ligne_a"]&filter=${filter}`
   );
   const data = (await res.json()) as typeShapesRequete;
 
@@ -35,10 +35,10 @@ const fetchshapesBRT = async (): Promise<typeShapes[]> => {
     id >= 123 && id <= 150
       ? "rgb(131,31,130)"
       : id === 151 || (id >= 158 && id <= 176)
-        ? "rgb(229,0,64)"
-        : id === 152 || (id >= 179 && id <= 186)
-          ? "rgb(211,80,152)"
-          : "rgb(146,98,163)";
+      ? "rgb(229,0,64)"
+      : id === 152 || (id >= 179 && id <= 186)
+      ? "rgb(211,80,152)"
+      : "rgb(146,98,163)";
 
   data.features.forEach((f) => {
     const routeId = f.properties.rs_sv_ligne_a;
@@ -55,7 +55,7 @@ const fetchshapesBRT = async (): Promise<typeShapes[]> => {
           coor.map((coorLine) => [
             coorLine[1],
             coorLine[0],
-          ]) as GeoJSON.Position[],
+          ]) as GeoJSON.Position[]
         );
       });
     } else {
@@ -63,7 +63,7 @@ const fetchshapesBRT = async (): Promise<typeShapes[]> => {
         f.geometry.coordinates.map((coor) => [
           coor[1],
           coor[0],
-        ]) as GeoJSON.Position[],
+        ]) as GeoJSON.Position[]
       );
     }
 
@@ -83,7 +83,7 @@ const fetchshapesBRT = async (): Promise<typeShapes[]> => {
           coordinates: coorPerRoute[id].map((coorLine) =>
             coorLine.sort((a, b) => a[0] - b[0])
           ),
-          type: "MultiLineString"
+          type: "MultiLineString",
         },
         properties: {
           routeColor: color,
@@ -96,16 +96,13 @@ const fetchshapesBRT = async (): Promise<typeShapes[]> => {
   });
 
   return shapes.sort(
-    (a, b) => parseInt(a.properties.routeId) - parseInt(b.properties.routeId),
+    (a, b) => parseInt(a.properties.routeId) - parseInt(b.properties.routeId)
   );
 };
 
 const saveShapesBRTToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const outputPath = path.resolve(
-    __dirname,
-    "../../data/brt/shapes.json",
-  );
+  const outputPath = path.resolve(__dirname, "../../data/brt/shapes.json");
 
   const shapesBRT = await fetchshapesBRT();
 
@@ -113,7 +110,7 @@ const saveShapesBRTToFile = async () => {
   fs.writeFileSync(outputPath, JSON.stringify(shapesBRT, null, 2), "utf-8");
 
   console.log(
-    `✅ Données BRT shapes.json générées : ${shapesBRT.length} lignes`,
+    `✅ Données BRT shapes.json générées : ${shapesBRT.length} lignes`
   );
 };
 

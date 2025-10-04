@@ -5,7 +5,7 @@ import type { typeShapesRequete, typeShapes } from "../../types/Tshapes";
 
 const fetchShapes = async (): Promise<typeShapes[]> => {
   const res = await fetch(
-    "https://transport.data.gouv.fr/resources/conversions/83024/GeoJSON",
+    "https://transport.data.gouv.fr/resources/conversions/83024/GeoJSON"
   );
 
   const data = (await res.json()) as typeShapesRequete;
@@ -23,7 +23,7 @@ const fetchShapes = async (): Promise<typeShapes[]> => {
         f.geometry.coordinates.map((coor) => [
           coor[1],
           coor[0],
-        ]) as GeoJSON.Position[],
+        ]) as GeoJSON.Position[]
       );
     });
 
@@ -54,16 +54,13 @@ const fetchShapes = async (): Promise<typeShapes[]> => {
     });
 
   return shapes.sort(
-    (a, b) => parseInt(a.properties.routeId) - parseInt(b.properties.routeId),
+    (a, b) => parseInt(a.properties.routeId) - parseInt(b.properties.routeId)
   );
 };
 
 const saveShapesToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const outputPath = path.resolve(
-    __dirname,
-    "../../data/tbm/shapes.json",
-  );
+  const outputPath = path.resolve(__dirname, "../../data/tbm/shapes.json");
 
   const shapes = await fetchShapes();
 

@@ -12,8 +12,8 @@ const cleanPlaceName = (raw: string): string => {
         .normalize("NFD")
         .replace(/\p{Diacritic}/gu, "")
         .toLowerCase()
-        .trim(),
-    ),
+        .trim()
+    )
   );
 
   return [...normalised].map((id) => {
@@ -22,7 +22,7 @@ const cleanPlaceName = (raw: string): string => {
         .normalize("NFD")
         .replace(/\p{Diacritic}/gu, "")
         .toLowerCase()
-        .includes(id),
+        .includes(id)
     )!;
   })[0];
 };
@@ -34,7 +34,7 @@ const checkLigne = (ligne: string, terminus: string): string => {
 
 const fetchRoutes = async (): Promise<typeRoutes[]> => {
   const res = await fetch(
-    "https://bdx.mecatran.com/utw/ws/siri/2.0/bordeaux/lines-discovery.json?AccountKey=opendata-bordeaux-metropole-flux-gtfs-rt",
+    "https://bdx.mecatran.com/utw/ws/siri/2.0/bordeaux/lines-discovery.json?AccountKey=opendata-bordeaux-metropole-flux-gtfs-rt"
   );
 
   const data = (await res.json()) as typeRoutesRequete;
@@ -69,10 +69,7 @@ const fetchRoutes = async (): Promise<typeRoutes[]> => {
 
 const saveRoutesToFile = async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const outputPath = path.resolve(
-    __dirname,
-    "../../data/tbm/routes.json",
-  );
+  const outputPath = path.resolve(__dirname, "../../data/tbm/routes.json");
 
   const routes = await fetchRoutes();
 
